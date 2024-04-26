@@ -5,4 +5,8 @@ Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/ra
 - The user will be asked to input their 1RM for their chosen exercises (which will then calculate the 1RM) based on the given rep range (3~6reps)
 - The program will then generate the users program for the next 6 weeks
 
-
+Plan:
+- A user can have many workout plans (one to many)
+- A workout plan belongs to a user (one to one)
+- A workout plan has many exercises (one to many)
+- An exercise belongs to a workout plan (one to one)
