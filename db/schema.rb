@@ -10,9 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_125108) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_13_151934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exercises", force: :cascade do |t|
+    t.string "name"
+    t.decimal "max"
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_exercises_on_plan_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "name"
+    t.integer "exercise_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_plans_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +44,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_125108) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weights", force: :cascade do |t|
+    t.decimal "weight"
+    t.integer "percentage"
+    t.integer "set"
+    t.integer "rep"
+    t.bigint "exercise_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_weights_on_exercise_id"
+  end
+
+  add_foreign_key "exercises", "plans"
+  add_foreign_key "plans", "users"
+  add_foreign_key "weights", "exercises"
 end
